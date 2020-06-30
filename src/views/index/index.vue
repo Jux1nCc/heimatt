@@ -2,7 +2,7 @@
   <div class="index">
     <van-nav-bar :fixed="true" title="首页" />
     <van-tabs v-model="active">
-      <van-tab :title='"标签" + item' v-for="item in 8" :key="item">
+      <van-tab :title='item.name' v-for="(item, index) in channels" :key="index">
         <van-pull-refresh v-model="isLoading" :head-height="80" @refresh="onRefresh" success-text="刷新成功">
           <van-list
             v-model="loading"
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { apiGetChannelList } from '@/api/channel'
 export default {
   data () {
     return {
@@ -34,7 +35,9 @@ export default {
       // 文章数据源
       list: [],
       // 下拉值的状态
-      isLoading: true
+      isLoading: true,
+      // 频道数据
+      channels: []
     }
   },
   methods: {
@@ -58,7 +61,19 @@ export default {
         this.onLoad()
         this.isLoading = false
       }, 1000)
+    },
+    async getChannelList () {
+      try {
+        var res = await apiGetChannelList()
+        console.log(res)
+        this.channels = res.data.data.channels
+      } catch (error) {
+        console.log('出错了')
+      }
     }
+  },
+  mounted () {
+    this.getChannelList()
   }
 }
 </script>
