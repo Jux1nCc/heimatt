@@ -1,6 +1,5 @@
 <template>
   <div>
-    <van-nav-bar />
     <router-view></router-view>
     <van-tabbar route>
       <van-tabbar-item to="/index" icon="home-o">主页</van-tabbar-item>
@@ -17,12 +16,5 @@ export default {
 }
 </script>
 
-<style lang='less' scoped>
-.van-nav-bar.van-hairline--bottom {
-  background: #3296fa;
-}
-/deep/.van-nav-bar__title.van-ellipsis {
-  color: #fff;
-}
-
+<style>
 </style>
