@@ -2,7 +2,7 @@
   <div class="login">
     <van-nav-bar title="登录" />
     <van-cell-group>
-      <van-field left-icon="smile-o" required :error-message="result.phone" v-model="obj.phone" placeholder="请输入手机号">
+      <van-field left-icon="smile-o" required :error-message="result.mobile" v-model="obj.mobile" placeholder="请输入手机号">
         <template #left-icon>
           <i class="iconfont icon-shouji"></i>
         </template>
@@ -23,37 +23,44 @@
 </template>
 
 <script>
+import { getLogin } from '@/api/user'
 export default {
   data () {
     return {
       obj: {
-        phone: '18888888888',
+        mobile: '18888888888',
         code: '246810'
       },
       result: {
-        phone: '',
+        mobile: '',
         code: ''
       }
     }
   },
   methods: {
     // 登录点击事件
-    login () {
+    async login () {
       if (this.checkData() === false) {
         return
       }
-      console.log('验证成功')
+      var res = await getLogin({
+        mobile: this.obj.mobile,
+        code: this.obj.code
+      })
+      // commit 专门用来调用mutations中的方法
+      this.$store.commit('setUserInfo', res.data.data)
+      this.$router.push('/home')
     },
     // 验证方法
     checkData () {
       // 是否通过验证
       var isPass = []
-      if (this.obj.phone.trim().length === 11) {
+      if (this.obj.mobile.trim().length === 11) {
         isPass.push(true)
-        this.result.phone = ''
+        this.result.mobile = ''
       } else {
         isPass.push(false)
-        this.result.phone = '输入正确的手机号'
+        this.result.mobile = '输入正确的手机号'
       }
       if (this.obj.code.trim().length === 6) {
         isPass.push(true)
