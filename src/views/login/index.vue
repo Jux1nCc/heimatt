@@ -17,7 +17,7 @@
       </van-field>
     </van-cell-group>
     <div class="loginBtn">
-      <van-button type="info" size="large" @click="login">登录</van-button>
+      <van-button type="info" size="large" @click="login" :loading="istrue">登录</van-button>
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@ import { localSet } from '../../utils/myLocal'
 export default {
   data () {
     return {
+      istrue: false,
       obj: {
         mobile: '18888888888',
         code: '246810'
@@ -46,15 +47,21 @@ export default {
       if (this.checkData() === false) {
         return
       }
-      var res = await getLogin({
-        mobile: this.obj.mobile,
-        code: this.obj.code
-      })
-      // commit 专门用来调用mutations中的方法
-      this.$store.commit('setUserInfo', res.data.data)
-      // window.localStorage.setItem('userInfo', JSON.stringify(res.data.data))
-      localSet('userInfo', res.data.data)
-      this.$router.push('/home')
+      this.istrue = true
+      try {
+        var res = await getLogin({
+          mobile: this.obj.mobile,
+          code: this.obj.code
+        })
+        // commit 专门用来调用mutations中的方法
+        this.$store.commit('setUserInfo', res.data.data)
+        // window.localStorage.setItem('userInfo', JSON.stringify(res.data.data))
+        localSet('userInfo', res.data.data)
+        this.$router.push('/home')
+      } catch {
+        this.$toast.fail('登录失败')
+      }
+      this.istrue = false
     },
     // 验证方法
     checkData () {
