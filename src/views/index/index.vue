@@ -13,6 +13,9 @@
         </van-list>
       </van-tab>
     </van-tabs>
+    <div class="channelBtn">
+      <van-icon name="bars" />
+    </div>
   </div>
 </template>
 
@@ -53,6 +56,19 @@ export default {
     top: 46px;
     left: 0px;
     z-index: 999;
-}
+    width: 90%;
+  }
+  .channelBtn {
+    position: fixed;
+    right: 0;
+    top: 45px;
+    width: 10%;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    color: #fff;
+    z-index: 1000;
+    background-color: #3296fa;
+  }
 }
 </style>
