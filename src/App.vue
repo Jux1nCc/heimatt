@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h4>vue实例</h4>
     <router-view></router-view>
   </div>
 </template>
