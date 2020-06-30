@@ -23,7 +23,10 @@
 </template>
 
 <script>
+// 导入登录请求
 import { getLogin } from '@/api/user'
+// 导入操作localStorage方法
+import { localSet } from '../../utils/myLocal'
 export default {
   data () {
     return {
@@ -38,7 +41,7 @@ export default {
     }
   },
   methods: {
-    // 登录点击事件
+    // 登录点击事件 - 利用async和await将异步代码顺序换成同步顺序
     async login () {
       if (this.checkData() === false) {
         return
@@ -49,6 +52,8 @@ export default {
       })
       // commit 专门用来调用mutations中的方法
       this.$store.commit('setUserInfo', res.data.data)
+      // window.localStorage.setItem('userInfo', JSON.stringify(res.data.data))
+      localSet('userInfo', res.data.data)
       this.$router.push('/home')
     },
     // 验证方法
