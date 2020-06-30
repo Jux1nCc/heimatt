@@ -10,6 +10,8 @@ import store from './store'
 import Vant from 'vant'
 // 导入vant样式
 import 'vant/lib/index.css'
+// 导入阿里巴巴字体图标
+import '@/style/index.css'
 
 // 使用vant
 Vue.use(Vant)
