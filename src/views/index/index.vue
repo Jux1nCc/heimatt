@@ -6,10 +6,10 @@
         <van-list
           v-model="loading"
           :finished="finished"
-          finished-text="没有更多了"
+          finished-text="-- 我是有底线的 --"
           @load="onLoad"
         >
-          <van-cell v-for="item in 20" :key="item" :title="item" />
+          <van-cell v-for="item in list" :key="item" :title="item" />
         </van-list>
       </van-tab>
     </van-tabs>
@@ -36,7 +36,16 @@ export default {
   methods: {
     // 上拉加载更多时 执行的事件
     onLoad () {
-      console.log('onLoad')
+      setTimeout(() => {
+        var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        this.list.push(...arr)
+        this.loading = false
+        if (this.list.length === 60) {
+          this.finished = true
+        }
+        console.log('onLoad')
+        console.log(this.list.length)
+      }, 1000)
     }
   }
 }
@@ -45,6 +54,7 @@ export default {
 <style lang='less' scoped >
 .index {
   margin-top: 90px;
+  margin-bottom: 50px;
   .van-nav-bar.van-hairline--bottom {
     background: #3296fa;
   }
