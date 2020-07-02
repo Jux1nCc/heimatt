@@ -20,12 +20,13 @@ const routes = [
   },
   // 登录页
   {
-    path: '/login',
+    path: '/',
     component: Login
   },
   // 首页
   {
     path: '/home',
+    redirect: '/index',
     component: Home,
     children: [
       {

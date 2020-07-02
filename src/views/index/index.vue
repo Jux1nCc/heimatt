@@ -3,7 +3,7 @@
     <van-nav-bar :fixed="true" title="首页" />
     <van-tabs v-model="active">
       <van-tab :title='item.name' v-for="(item, index) in channels" :key="index">
-        <van-pull-refresh v-model="isLoading" :head-height="80" @refresh="onRefresh" success-text="刷新成功">
+        <van-pull-refresh v-model="isLoading" :head-height="80" @refresh="onRefresh">
           <van-list
             v-model="loading"
             :finished="finished"
@@ -50,8 +50,8 @@ export default {
         if (this.list.length >= 60) {
           this.finished = true
         }
-        console.log('onLoad')
-        console.log(this.list.length)
+        // console.log('onLoad')
+        // console.log(this.list.length)
       }, 1000)
     },
     onRefresh () {
@@ -59,6 +59,8 @@ export default {
         console.log('onRefresh')
         this.list = []
         this.onLoad()
+        this.loading = false
+        this.finished = false
         this.isLoading = false
       }, 1000)
     },
@@ -88,7 +90,8 @@ export default {
   /deep/.van-nav-bar__title.van-ellipsis {
     color: #fff;
   }
-  /deep/.van-tabs__wrap.van-tabs__wrap--scrollable.van-hairline--top-bottom {
+  /deep/.van-tabs__wrap.van-hairline--top-bottom {
+  // /deep/.van-tabs__wrap.van-tabs__wrap--scrollable.van-hairline--top-bottom {
     position: fixed;
     top: 46px;
     left: 0px;
